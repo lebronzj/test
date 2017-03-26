@@ -1,0 +1,29 @@
+package com.test.sort;
+import static java.lang.System.out;
+
+/**
+ * Created by zhouj on 16/3/21.
+ * 冒泡排序
+ */
+public class BubbleSort {
+
+    public static void main(String args[]){
+        int[] array = {1,45,13,56,32,16,23,77,99,136,47,68,72,3,17,5};
+        Long timeMills = System.currentTimeMillis();
+        out.println(timeMills);
+        for (int i =0;i<array.length;i++){
+           for (int j =0;j<array.length-i-1;j++){
+               int sum;
+               if(array[j]>array[j+1]){
+                   sum = array[j];
+                   array[j] = array[j+1];
+                   array[j+1]=sum;
+               }
+           }
+        }
+        for (int i=0;i<array.length;i++)
+        out.println(array[i]);
+        out.println(System.currentTimeMillis()-timeMills);
+        out.println("  ".length());
+    }
+}
