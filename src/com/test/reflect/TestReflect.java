@@ -3,6 +3,7 @@ package com.test.reflect;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -41,6 +42,18 @@ public class TestReflect {
 
         Class stringArr = String[].class;
         System.out.println(stringArr.getName());
+
+
+        Class cl = TestPrivateMethod.class;
+        TestPrivateMethod testPrivateMethod = (TestPrivateMethod) cl.newInstance();
+        Method method1 = cl.getDeclaredMethod("getName");
+        System.out.println("method:"+method1);
+        try {
+            method1.setAccessible(true);
+            System.out.println(method1.invoke(testPrivateMethod,null));
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -20,8 +20,15 @@ public class TestTime {
         map.put("dssdsd",person==null?null:person.getAge());
         System.out.println("鱀:"+Integer.valueOf('鱀'));
         System.out.println("周:"+Integer.valueOf('周'));
+        TestTime testTime = new TestTime();
+        System.out.println(testTime.getCount(7));
+
     }
 
+    public int getCount(int month){
+        if(month<3) return 2;
+        return getCount(month-1)+getCount(month-4);
+    }
 
     static class Person{
         Double age;

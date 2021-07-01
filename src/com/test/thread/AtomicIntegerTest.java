@@ -1,7 +1,7 @@
 package com.test.thread;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by zhouj on 16/3/24.
@@ -17,7 +17,7 @@ public class AtomicIntegerTest {
 //        assertTrue(value.compareAndSet(10, 3));
 //        assertEquals(value.get(), 3);
 //        value.set(0);
-        //
+//
 //        assertEquals(value.incrementAndGet(), 1);
 //        assertEquals(value.getAndAdd(2),1);
 //        assertEquals(value.getAndSet(5),3);
@@ -25,6 +25,8 @@ public class AtomicIntegerTest {
         //
         final int threadSize = 100;
         Thread[] ts = new Thread[threadSize];
+        CountDownLatch latch = new CountDownLatch(100);   // 创建倒计时闩并指定倒计时次数为2
+
         for (int i = 0; i < threadSize; i++) {
             ts[i] = new Thread() {
                 public void run() {
@@ -38,7 +40,7 @@ public class AtomicIntegerTest {
                 }
             };
             ts[i].start();
-            ts[i].join();
+//            ts[i].join();
 //            ts[i].dumpStack();
             ClassLoader loaders = ts[i].getContextClassLoader();
             Map<Thread,StackTraceElement[]> map = ts[i].getAllStackTraces();
@@ -55,7 +57,7 @@ public class AtomicIntegerTest {
 //            t.join();
 //        }
 //        while (Thread.activeCount()==3)
-            System.out.println(value);
+        System.out.println(value);
         //
 //        assertEquals(value.get(), 5+threadSize);
     }

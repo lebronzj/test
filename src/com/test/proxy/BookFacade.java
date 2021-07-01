@@ -5,4 +5,6 @@ package com.test.proxy;
  */
 public interface BookFacade {
     void addBook();
+
+    void deleteBook();
 }

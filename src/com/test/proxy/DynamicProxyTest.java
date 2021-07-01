@@ -13,6 +13,7 @@ public class DynamicProxyTest {
     }
 
     static class DynaProxy implements InvocationHandler {
+        @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             System.out.println("dynamic proxy");
             Method[] methods = proxy.getClass().getMethods();
@@ -21,6 +22,8 @@ public class DynamicProxyTest {
             }
             Class clas = proxy.getClass().getSuperclass();
             System.out.println(clas.getName());
+//            IHello iHello = (IHello)proxy;
+//            iHello.sayHello();
             return new String("123");
         }
     }

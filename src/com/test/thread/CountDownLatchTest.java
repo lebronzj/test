@@ -53,6 +53,7 @@ class WorkerTestThread implements Runnable {
     public void run() {
         worker.doWork();        // 让工人开始工作
         cdLatch.countDown();    // 工作完成后倒计时次数减1
+        System.out.println("线程继续运行");
     }
 }
 

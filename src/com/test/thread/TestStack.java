@@ -20,6 +20,12 @@ public class TestStack {
         //引用类型和数值类型值改变
         int i = 0;
         String str = "jie";
+        String sd = new String("jie");
+        String ssd = "jie";
+        System.out.println(str==sd);
+        System.out.println(str==ssd);
+        System.out.println(str.equals(sd));
+        System.out.println(str.equals(ssd));
         int[] ints = {0,1,2,3};
         TestStack testStack = new TestStack();
         testStack.add(i);

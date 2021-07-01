@@ -1,5 +1,6 @@
 package com.test.sort;
 import static java.lang.System.out;
+import static java.lang.System.setOut;
 
 /**
  * Created by zhouj on 16/3/21.
@@ -25,5 +26,21 @@ public class BubbleSort {
         out.println(array[i]);
         out.println(System.currentTimeMillis()-timeMills);
         out.println("  ".length());
+        int x = new BubbleSort().test();
+        System.out.println("x:"+x);
+        System.out.println(String.class.getClassLoader());
+        System.out.println(BubbleSort.class.getClassLoader());
+    }
+
+
+    public int test(){
+        int x = 1;
+        try {
+            return x;
+        } catch (Exception e){
+            System.out.println(x);
+        }finally {
+            return ++x;
+        }
     }
 }
