@@ -1,6 +1,7 @@
 package com.test.sort;
+import org.openjdk.jol.info.ClassLayout;
+
 import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 /**
  * Created by zhouj on 16/3/21.
@@ -30,6 +31,11 @@ public class BubbleSort {
         System.out.println("x:"+x);
         System.out.println(String.class.getClassLoader());
         System.out.println(BubbleSort.class.getClassLoader());
+        out.println(timeMills);;
+        out.println(timeMills.hashCode());
+        out.println(Integer.toBinaryString(timeMills.hashCode()));
+        out.println(Integer.toHexString(timeMills.hashCode()));
+        out.println(ClassLayout.parseInstance(timeMills).hashCode());
     }
 
 

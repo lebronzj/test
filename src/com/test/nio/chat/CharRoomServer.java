@@ -59,10 +59,10 @@ public class CharRoomServer implements Runnable {
         while (active) {
             try {
                 //非阻塞接受连接
-//                int s = selector.selectNow();
+                int s = selector.selectNow();
 
                 //阻塞连接
-                int s = selector.select();
+//                int s = selector.select();
 
                 System.out.println("服务端接受到连接总数" + selector.keys().size());
             } catch (IOException e) {

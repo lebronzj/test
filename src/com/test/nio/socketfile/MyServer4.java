@@ -1,11 +1,9 @@
 package com.test.nio.socketfile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -14,8 +12,8 @@ import java.util.logging.Logger;
 /**
  * \
  * ————————————————
- *     版权声明：本文为CSDN博主「kongxx」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
- *     原文链接：https://blog.csdn.net/kongxx/article/details/7319410
+ * 版权声明：本文为CSDN博主「kongxx」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+ * 原文链接：https://blog.csdn.net/kongxx/article/details/7319410
  *
  * @author zhouj
  * @since 2021-07-01
@@ -71,10 +69,12 @@ public class MyServer4 {
         } finally {
             try {
                 selector.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
             try {
                 serverSocketChannel.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
         }
     }
 
@@ -83,41 +83,51 @@ public class MyServer4 {
         try {
             socketChannel = serverSocketChannel.accept();
 
-            receiveFile(socketChannel, new File("/Users/zhouj/Downloads/test.mp4"));
+            receiveFile(socketChannel, new RandomAccessFile("/Users/zhouj/Downloads/test.mp4", "rw"));
 //            sendFile(socketChannel, new File("E:/test/server_send.log"));
         } finally {
             try {
                 socketChannel.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
         }
 
     }
 
-    private static void receiveFile(SocketChannel socketChannel, File file) throws IOException {
+    private static void receiveFile(SocketChannel socketChannel, RandomAccessFile file) throws IOException {
+        long time = System.currentTimeMillis();
         FileOutputStream fos = null;
         FileChannel channel = null;
 
         try {
-            fos = new FileOutputStream(file);
-            channel = fos.getChannel();
+//            fos = new FileOutputStream(file);
+            channel = file.getChannel();
+            MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_WRITE, 0, 1024 * 1024 *512);
             ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
 
             int size = 0;
+            int length = 0;
             while ((size = socketChannel.read(buffer)) != -1) {
                 buffer.flip();
                 if (size > 0) {
                     buffer.limit(size);
-                    channel.write(buffer);
+//                    channel.write(buffer);
+                    mappedByteBuffer.put(buffer);
                     buffer.clear();
+                    length += size;
                 }
             }
+            System.out.println("接收文件长度:" + length);
+            System.out.println("耗时:" + (System.currentTimeMillis() - time));
         } finally {
             try {
                 channel.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
             try {
                 fos.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
         }
     }
 
@@ -139,10 +149,12 @@ public class MyServer4 {
         } finally {
             try {
                 channel.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
             try {
                 fis.close();
-            } catch(Exception ex) {}
+            } catch (Exception ex) {
+            }
         }
     }
 }

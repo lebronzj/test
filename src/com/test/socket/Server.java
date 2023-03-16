@@ -35,7 +35,7 @@ public class Server extends Thread {
         long donelen = 0;//传输完成的数据长度
         long filelen = 0;//文件长度
         try{
-            System.out.println("等待连接");
+            System.out.println("等待等待连接");
             ServerSocket listen = new ServerSocket(port);//设置端口监听器，在监听到客户端之前，一直堵塞
             do{
                 socket = listen.accept();

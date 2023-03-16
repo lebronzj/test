@@ -5,8 +5,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
 /**
+ * 揪出一个导致GC慢慢变长的JVM设计缺陷
  *
- * jvm: -XX:+UnlockCommercialFeatures -XX:+FlightRecorder
+ *
+ *
+ * jvm: -Xmx300M -Xms300M -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -XX:+PrintReferenceGC
+ *
  * @author zhouj
  * @since 2019/12/13
  */

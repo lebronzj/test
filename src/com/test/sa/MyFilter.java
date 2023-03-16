@@ -14,4 +14,5 @@ public class MyFilter implements ClassFilter {
         String klassName = kls.getName().asString();
         return klassName.startsWith("com/fr/license/selector/");
     }
+
 }

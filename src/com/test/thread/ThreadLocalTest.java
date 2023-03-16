@@ -33,8 +33,14 @@ public class ThreadLocalTest {
 
 
         Thread thread1 = new Thread(){
+            @Override
             public void run() {
                 test.set();
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(test.getLong());
                 System.out.println(test.getString());
             };

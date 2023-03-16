@@ -1,5 +1,7 @@
 package com.test.socket;
 
+import lombok.SneakyThrows;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -11,6 +13,7 @@ import java.util.Iterator;
 
 /**
  * NIO服务端
+ *
  * @author 小路
  */
 public class NIOServer {
@@ -19,10 +22,11 @@ public class NIOServer {
 
     /**
      * 获得一个ServerSocket通道，并对该通道做一些初始化的工作
-     * @param port  绑定的端口号
+     *
+     * @param port 绑定的端口号
      * @throws IOException
      */
-    public void initServer(int port) throws IOException {
+    public ServerSocketChannel initServer(int port) throws IOException {
         // 获得一个ServerSocket通道
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
         // 设置通道为非阻塞
@@ -35,10 +39,23 @@ public class NIOServer {
         //当该事件到达时，selector.select()会返回，如果该事件没到达selector.select()会一直阻塞。
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println("非阻塞");
+        return serverChannel;
+    }
+
+    /**
+     * 非注册selector方式
+     */
+    @SneakyThrows
+    public void accept(ServerSocketChannel serverSocketChannel) {
+        while (true) {
+            serverSocketChannel.accept();
+            System.out.println("非阻塞 accept");
+        }
     }
 
     /**
      * 采用轮询的方式监听selector上是否有需要处理的事件，如果有，则进行处理
+     *
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -81,12 +98,14 @@ public class NIOServer {
 
         }
     }
+
     /**
      * 处理读取客户端发来的信息 的事件
+     *
      * @param key
      * @throws IOException
      */
-    public void read(SelectionKey key) throws IOException{
+    public void read(SelectionKey key) throws IOException {
         // 服务器可读取消息:得到事件发生的Socket通道
         SocketChannel channel = (SocketChannel) key.channel();
         // 创建读取的缓冲区
@@ -94,19 +113,22 @@ public class NIOServer {
         channel.read(buffer);
         byte[] data = buffer.array();
         String msg = new String(data).trim();
-        System.out.println("服务端收到信息："+msg);
+        System.out.println("服务端收到信息：" + msg);
         ByteBuffer outBuffer = ByteBuffer.wrap(msg.getBytes());
         channel.write(outBuffer);// 将消息回送给客户端
     }
 
     /**
      * 启动服务端测试
+     *
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         NIOServer server = new NIOServer();
-        server.initServer(8000);
-        server.listen();
+        //ServerSocketChannel 循环accept
+        server.accept(server.initServer(8000));
+        //selector监听
+//        server.listen();
     }
 
 }

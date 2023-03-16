@@ -83,6 +83,7 @@ public class NIOClient {
     private static void handleConnect(SelectionKey key) throws IOException {
         // 获取与服务端建立连接的通道
         SocketChannel channel = (SocketChannel) key.channel();
+        channel.getLocalAddress();
         if (channel.isConnectionPending()) {
             // channel.finishConnect()才能完成连接
             channel.finishConnect();

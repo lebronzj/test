@@ -37,7 +37,7 @@ public class SnowFlake {
     private long datacenterId;  //数据中心
     private long machineId;     //机器标识
     private long sequence = 0L; //序列号
-    private long lastStmp = -1L;//上一次时间戳
+    private long lastStmp = -1L;//上一次时间戳x
 
     public SnowFlake(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
